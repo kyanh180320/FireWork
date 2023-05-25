@@ -66,17 +66,21 @@ public class TouchFireWork : MonoBehaviour
             return c;
         }
     }
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    int random = Random.Range(0, arrayFireWork.Length);
-    //    ParticleSystem fireworkSpawn = Instantiate(arrayFireWork[random], collision.gameObject.transform.position, Quaternion.identity);
-    //    fireworkSpawn.Play();
-    //    StartCoroutine(DelayDestroyFireWork(fireworkSpawn));
-    //    Destroy(collision.gameObject);
-    //}
-    //IEnumerator DelayDestroyFireWork(ParticleSystem firework)
-    //{
-    //    yield return new WaitForSeconds(1f);
-    //    Destroy(firework.gameObject);
-    //}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        GetFireWork(collision.gameObject);
+        Destroy(collision.gameObject);
+    }
+    IEnumerator DelayDestroyFireWork(ParticleSystem firework)
+    {
+        yield return new WaitForSeconds(1f);
+        Destroy(firework.gameObject);
+    }
+    public void GetFireWork(GameObject fireworkPos)
+    {
+        int random = Random.Range(0, arrayFireWork.Length);
+        ParticleSystem fireworkSpawn = Instantiate(arrayFireWork[random], fireworkPos.transform.position, Quaternion.identity);
+        fireworkSpawn.Play();
+        StartCoroutine(DelayDestroyFireWork(fireworkSpawn));
+    }
 }

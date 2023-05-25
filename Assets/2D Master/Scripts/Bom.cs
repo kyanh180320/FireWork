@@ -22,25 +22,15 @@ public class Bom : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Player"))
         {
-            createFireWork();
         }
 
     }
-    IEnumerator DelayDestroyFireWork(ParticleSystem firework)
-    {
-        yield return new WaitForSeconds(1f);
-        Destroy(firework.gameObject);
-    }
-    void createFireWork()
-    {
-        int random = Random.Range(0, FireWorkPrefab.Length);
-        ParticleSystem FireWorkSpawn = Instantiate(FireWorkPrefab[random], transform.position, Quaternion.identity);
-        FireWorkSpawn.Play();
-        Destroy(gameObject);
-        StartCoroutine(DelayDestroyFireWork(FireWorkSpawn));
-    }
+
     private void OnMouseDown()
     {
-        createFireWork();
+        FindObjectOfType<TouchFireWork>().GetFireWork(gameObject);
+        Destroy(gameObject);
+
+
     }
 }
